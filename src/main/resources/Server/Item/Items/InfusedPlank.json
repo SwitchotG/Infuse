@@ -1,0 +1,89 @@
+{
+  "TranslationProperties": {
+    "Name": "infuse.InfusedPlank.name",
+    "Description": "infuse.InfusedPlank.desc"
+  },
+  "ItemLevel": 15,
+  "MaxStack": 100,
+  "Icon": "Icons/ItemsGenerated/InfusedPlank.png",
+  "Categories": [
+    "Blocks.Rocks"
+  ],
+  "FuelQuality": 6.0,
+  "PlayerAnimationsId": "Block",
+  "Set": "Wood_Softwood_Planks",
+  "Recipe": {
+    "Input": [
+      {
+        "ResourceTypeId": "Wood_All",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Ingredient_Life_Essence"
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Id": "Workbench",
+        "Type": "Crafting",
+        "Categories": [
+          "Workbench_Tinkering"
+        ]
+      }
+    ],
+    "OutputQuantity": 1
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Cube",
+    "Group": "Wood",
+    "Flags": {},
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Woods"
+      }
+    },
+    "BlockParticleSetId": "Wood",
+    "Textures": [
+      {
+        "Sides": "BlockTextures/Infused_plank.png",
+        "UpDown": "BlockTextures/Infused_plank.png",
+        "Weight": 5
+      }
+    ],
+    "ParticleColor": "#414439",
+    "BlockSoundSetId": "Wood"
+  },
+  "ResourceTypes": [
+    {
+      "Id": "Wood_Planks"
+    },
+    {
+      "Id": "Fuel"
+    },
+    {
+      "Id": "Charcoal"
+    },
+    {
+      "Id": "Wood_All"
+    }
+  ],
+  "Tags": {
+    "Type": [
+      "Wood"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Blocks_Wood",
+  "IconProperties": {
+    "Scale": 0.58823,
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Translation": [
+      0,
+      -13.5
+    ]
+  }
+}

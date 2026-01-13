@@ -16,7 +16,7 @@ public class InfuseCommand extends CommandBase {
     private final String pluginVersion;
 
     public InfuseCommand(String pluginName, String pluginVersion) {
-        super("test", "Prints a test message from the " + pluginName + " plugin.");
+        super("infuseTest", "Prints a test message from the " + pluginName + " plugin.");
         this.setPermissionGroup(GameMode.Adventure); // Allows the command to be used by anyone, not just OP
         this.pluginName = pluginName;
         this.pluginVersion = pluginVersion;
