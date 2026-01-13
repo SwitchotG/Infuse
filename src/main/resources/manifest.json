@@ -1,14 +1,14 @@
 {
-    "Group": "Example",
-    "Name": "ExamplePlugin",
-    "Version": "0.0.2",
-    "Description": "An example plugin for HyTale!",
+    "Group": "Infuse",
+    "Name": "Infuse",
+    "Version": "0.0.1",
+    "Description": "A mod that bring magic automation into your world !",
     "Authors": [
         {
-            "Name": "It's you!"
+            "Name": "Switchot"
         }
     ],
-    "Website": "example.org",
+    "Website": "",
     "ServerVersion": "*",
     "Dependencies": {
         
@@ -17,6 +17,6 @@
         
     },
     "DisabledByDefault": false,
-    "Main": "org.example.plugin.ExamplePlugin",
+    "Main": "org.infuse.plugin.InfusePlugin",
     "IncludesAssetPack": true
 }
