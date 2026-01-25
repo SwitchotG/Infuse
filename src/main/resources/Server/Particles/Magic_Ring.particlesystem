@@ -1,0 +1,14 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "Magic_Spell",
+      "RotationOffset": {
+        "Pitch": 90
+      },
+      "FixedRotation": true,
+      "PositionOffset": {
+        "Y": 0.5
+      }
+    }
+  ]
+}

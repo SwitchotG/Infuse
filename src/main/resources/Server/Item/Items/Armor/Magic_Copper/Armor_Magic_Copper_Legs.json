@@ -1,0 +1,92 @@
+{
+  "TranslationProperties": {
+    "Name": "infuse.mcArmorLegs.name"
+  },
+  "Parent": "Armor_Iron_Legs",
+  "ItemLevel": 10,
+  "Icon": "Icons/ItemsGenerated/Armor_Magic_Copper_Legs.png",
+  "IconProperties": {
+    "Scale": 0.355,
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Translation": [
+      0.6,
+      -22.2
+    ]
+  },
+  "Model": "Items/Armors/Copper/Legs.blockymodel",
+  "Texture": "Items/Armors/Magic_Copper/Legs_Texture.png",
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "Armor_Copper_Legs"
+      },
+      {
+        "Quantity": 3,
+        "ItemId": "Ingredient_Crystal_Green"
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Id": "Armor_Bench",
+        "Type": "Crafting",
+        "Categories": [
+          "Armor_Legs"
+        ]
+      }
+    ],
+    "KnowledgeRequired": false,
+    "TimeSeconds": 3
+  },
+  "Armor": {
+    "ArmorSlot": "Legs",
+    "BaseDamageResistance": 0,
+    "CosmeticsToHide": [
+      "Pants",
+      "Shoes"
+    ],
+    "DamageResistance": {
+      "Physical": [
+        {
+          "Amount": 0.0504,
+          "CalculationType": "Multiplicative"
+        }
+      ],
+      "Projectile": [
+        {
+          "Amount": 0.0504,
+          "CalculationType": "Multiplicative"
+        }
+      ]
+    },
+    "StatModifiers": {
+      "Health": [
+        {
+          "Amount": 7,
+          "CalculationType": "Additive"
+        }
+      ],
+      "Mana": [
+        {
+          "CalculationType": "Additive",
+          "Amount": 6
+        }
+      ]
+    }
+  },
+  "MaxDurability": 80,
+  "Tags": {
+    "Type": [
+      "Armor"
+    ],
+    "Family": [
+      "Copper"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Armor_Heavy",
+  "DurabilityLossOnHit": 0.5,
+  "Quality": "Common"
+}

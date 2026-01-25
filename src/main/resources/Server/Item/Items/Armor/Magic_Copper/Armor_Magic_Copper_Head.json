@@ -1,0 +1,96 @@
+{
+  "TranslationProperties": {
+    "Name": "infuse.mcArmorHead.name"
+  },
+  "Parent": "Armor_Iron_Head",
+  "ItemLevel": 10,
+  "Icon": "Icons/ItemsGenerated/Armor_Magic_Copper_Head.png",
+  "Model": "Items/Armors/Copper/Head.blockymodel",
+  "Texture": "Items/Armors/Magic_Copper/Head_Texture.png",
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "Armor_Copper_Head",
+        "Quantity": 1
+      },
+      {
+        "Quantity": 2,
+        "ItemId": "Ingredient_Crystal_Green"
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Id": "Armor_Bench",
+        "Type": "Crafting",
+        "Categories": [
+          "Armor_Head"
+        ]
+      }
+    ],
+    "KnowledgeRequired": false,
+    "TimeSeconds": 3
+  },
+  "Armor": {
+    "ArmorSlot": "Head",
+    "BaseDamageResistance": 0,
+    "CosmeticsToHide": [
+      "EarAccessory",
+      "Ear",
+      "Haircut",
+      "HeadAccessory"
+    ],
+    "DamageResistance": {
+      "Physical": [
+        {
+          "Amount": 0.036,
+          "CalculationType": "Multiplicative"
+        }
+      ],
+      "Projectile": [
+        {
+          "Amount": 0.036,
+          "CalculationType": "Multiplicative"
+        }
+      ]
+    },
+    "StatModifiers": {
+      "Health": [
+        {
+          "Amount": 5,
+          "CalculationType": "Additive"
+        }
+      ],
+      "Mana": [
+        {
+          "Target": "Max",
+          "CalculationType": "Additive",
+          "Amount": 4
+        }
+      ]
+    }
+  },
+  "MaxDurability": 80,
+  "Tags": {
+    "Type": [
+      "Armor"
+    ],
+    "Family": [
+      "Copper"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Armor_Heavy",
+  "DurabilityLossOnHit": 0.5,
+  "Quality": "Common",
+  "IconProperties": {
+    "Scale": 0.5,
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Translation": [
+      0,
+      -3
+    ]
+  }
+}

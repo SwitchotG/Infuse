@@ -23,7 +23,7 @@
         }
       ],
       "Breaking": {
-        "ItemId": "Wood_Oak_Trunk",
+        "ItemId": "InfusedLog",
         "GatherType": "Woods"
       },
       "Physics": {
@@ -138,25 +138,6 @@
     "Translation": [
       0,
       -13.5
-    ]
-  },
-  "Recipe": {
-    "Input": [
-      {
-        "ResourceTypeId": "Wood_All",
-        "Quantity": 1
-      },
-      {
-        "ItemId": "Ingredient_Life_Essence"
-      }
-    ],
-    "BenchRequirement": [
-      {
-        "Id": "Workbench",
-        "Categories": [
-          "Workbench_Tinkering"
-        ]
-      }
     ]
   }
 }

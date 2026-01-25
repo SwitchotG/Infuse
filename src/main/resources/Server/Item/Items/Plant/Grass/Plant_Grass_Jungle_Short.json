@@ -1,0 +1,28 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Plant_Grass_Jungle_Short.name"
+  },
+  "Parent": "Plant_Grass_Lush",
+  "BlockType": {
+    "CustomModel": "Blocks/Foliage/Plants/Cross_17px.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/Foliage/Plants/Cross_17px_Textures/Jungle_GS.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "Plant_Small",
+    "Tint": [
+      "#5ca12d"
+    ],
+    "ParticleColor": "#d9d9d9",
+    "BlockEntity": {
+      "Components": {
+        "METraversableComponent": {
+          "StoppingPower": 1
+        }
+      }
+    }
+  },
+  "Icon": "Icons/ItemsGenerated/Plant_Grass_Jungle_Short.png"
+}

@@ -1,0 +1,89 @@
+{
+  "TranslationProperties": {
+    "Name": "infuse.mcArmorHands.name"
+  },
+  "Parent": "Armor_Iron_Hands",
+  "ItemLevel": 10,
+  "Icon": "Icons/ItemsGenerated/Armor_Magic_Copper_Hands.png",
+  "IconProperties": {
+    "Scale": 0.92,
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Translation": [
+      15,
+      -35.4
+    ]
+  },
+  "Model": "Items/Armors/Copper/Hands.blockymodel",
+  "Texture": "Items/Armors/Magic_Copper/Hands_Texture.png",
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "Armor_Copper_Hands",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Ingredient_Crystal_Green"
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Id": "Armor_Bench",
+        "Type": "Crafting",
+        "Categories": [
+          "Armor_Hands"
+        ]
+      }
+    ],
+    "KnowledgeRequired": false,
+    "TimeSeconds": 3
+  },
+  "Armor": {
+    "ArmorSlot": "Hands",
+    "BaseDamageResistance": 0,
+    "DamageResistance": {
+      "Physical": [
+        {
+          "Amount": 0.0288,
+          "CalculationType": "Multiplicative"
+        }
+      ],
+      "Projectile": [
+        {
+          "Amount": 0.0288,
+          "CalculationType": "Multiplicative"
+        }
+      ]
+    },
+    "StatModifiers": {
+      "Health": [
+        {
+          "Amount": 4,
+          "CalculationType": "Additive"
+        }
+      ],
+      "Mana": [
+        {
+          "CalculationType": "Additive",
+          "Target": "Max",
+          "Amount": 2
+        }
+      ]
+    }
+  },
+  "MaxDurability": 80,
+  "Tags": {
+    "Type": [
+      "Armor"
+    ],
+    "Family": [
+      "Copper"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Armor_Heavy",
+  "DurabilityLossOnHit": 0.5,
+  "Quality": "Common"
+}

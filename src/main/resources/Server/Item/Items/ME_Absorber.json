@@ -1,0 +1,99 @@
+{
+  "TranslationProperties": {
+    "Name": "infuse.absorber.name",
+    "Description": "infuse.absorber.desc"
+  },
+  "Id": "Absorber",
+  "MaxStack": 100,
+  "Icon": "Icons/ItemsGenerated/ME_Absorber.png",
+  "Categories": [
+    "Blocks.Rocks"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Set": "Rock_Stone",
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Group": "Stone",
+    "Flags": {},
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks",
+        "ItemId": "ME_Absorber"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#3a3a3a",
+    "BlockSoundSetId": "Stone",
+    "BlockBreakingDecalId": "Breaking_Decals_Rock",
+    "CustomModelTexture": [
+      {
+        "Weight": 1,
+        "Texture": "BlockTextures/me_absorber.png"
+      }
+    ],
+    "PlacementSettings": {
+      "AllowRotationKey": true,
+      "PlaceInEmptyBlocks": true,
+      "BlockPreviewVisibility": "AlwaysVisible"
+    },
+    "VariantRotation": "NESW",
+    "CustomModelScale": 1,
+    "HitboxType": "Absorber_Hibox",
+    "CustomModel": "Blocks/E-Absorber.blockymodel",
+    "Particles": [
+      {
+        "SystemId": "Magic_Ring",
+        "Color": "#000000"
+      }
+    ],
+    "BlockEntity": {
+      "Components": {
+        "MEEmitterComponent": {
+          "Resistance": 5,
+          "Cost": 3
+        }
+      }
+    },
+    "Interactions": {
+      "Collision": {
+        "Interactions": [
+          {
+            "Type": "infuse_EmitterCollideinteraction"
+          }
+        ]
+      }
+    }
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "Cloth_Block_Wool_Purple_Light",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Ingredient_Crystal_Green",
+        "Quantity": 1
+      },
+      {
+        "ResourceTypeId": "Rock",
+        "Quantity": 1
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "Arcanebench",
+        "Categories": [
+          "Arcane_Infuse"
+        ]
+      }
+    ],
+    "Output": [
+      {
+        "ItemId": "ME_Absorber"
+      }
+    ],
+    "TimeSeconds": 5
+  }
+}

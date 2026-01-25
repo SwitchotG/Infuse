@@ -12,27 +12,6 @@
   "FuelQuality": 6.0,
   "PlayerAnimationsId": "Block",
   "Set": "Wood_Softwood_Planks",
-  "Recipe": {
-    "Input": [
-      {
-        "ResourceTypeId": "Wood_All",
-        "Quantity": 1
-      },
-      {
-        "ItemId": "Ingredient_Life_Essence"
-      }
-    ],
-    "BenchRequirement": [
-      {
-        "Id": "Workbench",
-        "Type": "Crafting",
-        "Categories": [
-          "Workbench_Tinkering"
-        ]
-      }
-    ],
-    "OutputQuantity": 1
-  },
   "BlockType": {
     "Material": "Solid",
     "DrawType": "Cube",

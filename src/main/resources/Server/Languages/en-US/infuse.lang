@@ -2,3 +2,13 @@ InfusedPlank.name=Infused Plank
 InfusedPlank.desc=A infused plank !
 
 InfusedLog.name=Infused Log
+
+absorber.name=ME Absorber
+absorber.desc=This block is really powerful and can take magic element placed on it to generate a magic beam !
+
+mcArmorHead.name=Magic Copper Helm
+mcArmorChest.name=Magic Copper Cuirass
+mcArmorLegs.name=Magic Copper Greaves
+mcArmorHands.name=Magic Copper Gauntlets
+
+benchCategories.workbench.infuse=Infuse

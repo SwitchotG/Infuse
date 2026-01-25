@@ -1,0 +1,27 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Plant_Grass_Sharp_Wild.name"
+  },
+  "Parent": "Plant_Grass_Lush",
+  "BlockType": {
+    "CustomModel": "Blocks/Foliage/Grass/Dense_VeryTall_4Rows.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Weight": 1,
+        "Texture": "Blocks/Foliage/Grass/Dense_VeryTall_4Rows_Sharp.png"
+      }
+    ],
+    "Tint": [
+      "#67b62d"
+    ],
+    "HitboxType": "Plant_Tall_Large",
+    "BlockEntity": {
+      "Components": {
+        "METraversableComponent": {
+          "StoppingPower": 3
+        }
+      }
+    }
+  },
+  "Icon": "Icons/ItemsGenerated/Plant_Grass_Sharp_Wild.png"
+}
