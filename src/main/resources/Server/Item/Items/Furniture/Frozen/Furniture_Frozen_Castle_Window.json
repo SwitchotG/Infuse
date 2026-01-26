@@ -95,13 +95,6 @@
       "Components": {
         "METraversableComponent": {
           "StoppingPower": 1
-        },
-        "METransformableComponent": {
-          "TransformationId": "InfusedLog"
-        },
-        "MEEmitterComponent": {
-          "Resistance": 1,
-          "Cost": 1
         }
       }
     }
