@@ -1,14 +1,10 @@
 package org.infuse.plugin.Utils;
 
 import com.hypixel.hytale.component.Holder;
-import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.math.util.ChunkUtil;
 import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.math.vector.Vector3i;
 import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
-import com.hypixel.hytale.server.core.modules.interaction.BlockHarvestUtils;
-import com.hypixel.hytale.server.core.modules.interaction.BlockPlaceUtils;
 import com.hypixel.hytale.server.core.universe.world.ParticleUtil;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
@@ -29,16 +25,16 @@ public final class RayUtil {
             i++;
             switch(rotation){
                 case 0:
-                    resistanceLeft = shootPartRay(world, new Vector3i(vector3i.x + 1 + i, vector3i.y, vector3i.z), resistanceLeft, store);
-                    break;
-                case 1:
-                    resistanceLeft = shootPartRay(world, new Vector3i(vector3i.x, vector3i.y, vector3i.z - 1 - i), resistanceLeft, store);
-                    break;
-                case 2:
                     resistanceLeft = shootPartRay(world, new Vector3i(vector3i.x - 1 - i, vector3i.y, vector3i.z), resistanceLeft, store);
                     break;
-                case 3:
+                case 1:
                     resistanceLeft = shootPartRay(world, new Vector3i(vector3i.x, vector3i.y, vector3i.z + 1 + i), resistanceLeft, store);
+                    break;
+                case 2:
+                    resistanceLeft = shootPartRay(world, new Vector3i(vector3i.x + 1 + i, vector3i.y, vector3i.z), resistanceLeft, store);
+                    break;
+                case 3:
+                    resistanceLeft = shootPartRay(world, new Vector3i(vector3i.x, vector3i.y, vector3i.z - 1 - i), resistanceLeft, store);
                     break;
             }
         }
@@ -75,8 +71,10 @@ public final class RayUtil {
                     return returnedResistance;
                 }
             }
-            ParticleUtil.spawnParticleEffect("Mana_Small_Explosion", new Vector3d(vector3i.x + 0.5, vector3i.y + 0.3, vector3i.z + 0.5), store);
+            ParticleUtil.spawnParticleEffect("Mana_Small_Explosion", new Vector3d(vector3i.x + 0.5, vector3i.y, vector3i.z + 0.5), store);
         }
+
+
         return returnedResistance;
     }
 }

@@ -5,7 +5,6 @@
   },
   "Id": "Absorber",
   "MaxStack": 100,
-  "Icon": "Icons/ItemsGenerated/ME_Absorber.png",
   "Categories": [
     "Blocks.Rocks"
   ],
@@ -26,25 +25,21 @@
     "ParticleColor": "#3a3a3a",
     "BlockSoundSetId": "Stone",
     "BlockBreakingDecalId": "Breaking_Decals_Rock",
-    "CustomModelTexture": [
-      {
-        "Weight": 1,
-        "Texture": "BlockTextures/me_absorber.png"
-      }
-    ],
     "PlacementSettings": {
       "AllowRotationKey": true,
       "PlaceInEmptyBlocks": true,
       "BlockPreviewVisibility": "AlwaysVisible"
     },
     "VariantRotation": "NESW",
-    "CustomModelScale": 1,
     "HitboxType": "Absorber_Hibox",
     "CustomModel": "Blocks/E-Absorber.blockymodel",
     "Particles": [
       {
         "SystemId": "Magic_Ring",
-        "Color": "#000000"
+        "Color": "#000000",
+        "PositionOffset": {
+          "Y": 0.4
+        }
       }
     ],
     "BlockEntity": {
@@ -63,7 +58,13 @@
           }
         ]
       }
-    }
+    },
+    "CustomModelTexture": [
+      {
+        "Texture": "BlockTextures/me_absorber.png"
+      }
+    ],
+    "CustomModelAnimation": "Blocks/Offstate-Absorber.blockyanim"
   },
   "Recipe": {
     "Input": [
@@ -95,5 +96,20 @@
       }
     ],
     "TimeSeconds": 5
+  },
+  "Model": "Blocks/E-Absorber.blockymodel",
+  "Texture": "BlockTextures/me_absorber.png",
+  "Icon": "Icons/ItemsGenerated/ME_Absorber.png",
+  "IconProperties": {
+    "Scale": 0.58823,
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Translation": [
+      0,
+      -13.5
+    ]
   }
 }
