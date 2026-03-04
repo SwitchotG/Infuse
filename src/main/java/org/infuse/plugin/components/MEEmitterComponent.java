@@ -10,6 +10,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.infuse.plugin.InfusePlugin;
 
 import javax.annotation.Nonnull;
+import java.util.UUID;
 
 public class MEEmitterComponent implements Component<ChunkStore> {
 
@@ -22,15 +23,19 @@ public class MEEmitterComponent implements Component<ChunkStore> {
                     (comp, cost) -> comp.cost = cost,
                     comp -> comp.cost)
             .add()
+            .append(new KeyedCodec<>("Creative", Codec.BOOLEAN),
+                    (comp, creative) -> comp.creative = creative,
+                    comp -> comp.creative)
+            .add()
             .build();
 
     private int resistance;
 
     private int cost;
 
-    public MEEmitterComponent() {
+    private boolean creative;
 
-    }
+    private final UUID blockId;
 
     public int getResistance() {
         return resistance;
@@ -48,9 +53,27 @@ public class MEEmitterComponent implements Component<ChunkStore> {
         this.cost = cost;
     }
 
-    public MEEmitterComponent(int resistance, int cost) {
+    public boolean isCreative() {
+        return creative;
+    }
+
+    public void setCreative(boolean creative) {
+        this.creative = creative;
+    }
+
+    public UUID getBlockId() {
+        return blockId;
+    }
+
+    public MEEmitterComponent() {
+        this.blockId = UUID.randomUUID();
+    }
+
+    public MEEmitterComponent(int resistance, int cost, boolean isCreative) {
         this.resistance = resistance;
         this.cost = cost;
+        this.creative = isCreative;
+        this.blockId = UUID.randomUUID();
     }
 
     public static ComponentType<ChunkStore, MEEmitterComponent> getComponentType() {
@@ -59,7 +82,7 @@ public class MEEmitterComponent implements Component<ChunkStore> {
 
     @Nonnull
     public MEEmitterComponent clone() {
-        MEEmitterComponent component = new MEEmitterComponent(this.resistance, this.cost);
+        MEEmitterComponent component = new MEEmitterComponent(this.resistance, this.cost, this.creative);
         return component;
     }
 }

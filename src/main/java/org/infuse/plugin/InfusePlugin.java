@@ -8,12 +8,12 @@ import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Int
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
-import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.infuse.plugin.Interactions.EmitterCollideInteraction;
 import org.infuse.plugin.commands.InfuseCommand;
-import org.infuse.plugin.components.MEEmitterComponent;
-import org.infuse.plugin.components.METransformableComponent;
-import org.infuse.plugin.components.METraversableComponent;
+import org.infuse.plugin.components.*;
+import org.infuse.plugin.system.EmiteBreakSystem;
+import org.infuse.plugin.system.EmiteSystem;
+import org.infuse.plugin.system.RayCleanupSystem;
 
 import javax.annotation.Nonnull;
 
@@ -50,10 +50,12 @@ public class InfusePlugin extends JavaPlugin {
         this.METransformableComponentType = this.getChunkStoreRegistry().registerComponent(METransformableComponent.class, "METransformableComponent", METransformableComponent.CODEC);
 
         //System registry
+        this.getChunkStoreRegistry().registerSystem(new EmiteSystem());
+        this.getEntityStoreRegistry().registerSystem(new EmiteBreakSystem());
+        this.getChunkStoreRegistry().registerSystem(new RayCleanupSystem());
 
         //Interaction registry
         this.getCodecRegistry(Interaction.CODEC).register("infuse_EmitterCollideinteraction", EmitterCollideInteraction.class, EmitterCollideInteraction.CODEC);
-
     }
 
     public ComponentType<ChunkStore, MEEmitterComponent> getMEEmitterComponentType(){
