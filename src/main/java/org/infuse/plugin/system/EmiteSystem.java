@@ -32,7 +32,6 @@ public class EmiteSystem extends EntityTickingSystem<ChunkStore> {
 
 
             if(component != null){
-                InfusePlugin.get().getLOGGER().atInfo().log(component.getBlockId() + "");
 
                 var world = store.getExternalData().getWorld();
 

@@ -1,7 +1,7 @@
 {
   "TranslationProperties": {
-    "Name": "infuse.absorber.name",
-    "Description": "infuse.absorber.desc"
+    "Name": "infuse.creative_absorber.name",
+    "Description": "infuse.creative_absorber.desc"
   },
   "Id": "Absorber",
   "MaxStack": 100,

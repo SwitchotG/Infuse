@@ -6,6 +6,9 @@ InfusedLog.name=Infused Log
 absorber.name=ME Absorber
 absorber.desc=This block is really powerful and can take magic element placed on it to generate a magic beam !
 
+creative_absorber.name=Creative ME Absorber
+creative_absorber.desc=A creative only version of the ME Absorber !
+
 mcArmorHead.name=Magic Copper Helm
 mcArmorChest.name=Magic Copper Cuirass
 mcArmorLegs.name=Magic Copper Greaves

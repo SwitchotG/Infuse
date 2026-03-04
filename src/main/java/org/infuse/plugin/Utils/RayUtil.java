@@ -64,7 +64,6 @@ public final class RayUtil {
                 if(ray.canUnPropagateAs(uuid)){
                     RayStorage.remove(x, y, z);
                 }else{
-                    InfusePlugin.get().getLOGGER().atInfo().log("DeleteCollision");
                     ray.deleteCollisionAs(uuid);
                 }
             }
@@ -72,7 +71,6 @@ public final class RayUtil {
         }else{
             if(ray != null){
                 if(!ray.canPropagate(uuid)){
-                    InfusePlugin.get().getLOGGER().atInfo().log("CannotPropagate");
                     ray.collideWith(uuid, resistanceLeft);
                     if(ray.needToUpdateCollision(uuid)){
                         ray.update(uuid, resistanceLeft);
@@ -81,7 +79,6 @@ public final class RayUtil {
                 }else{
                     if(ray.getOtherRay() != null){
                         returnedResistance -= (ray.getOtherResistance() - 1);
-                        InfusePlugin.get().getLOGGER().atInfo().log(uuid + " CHANGED resistance to : " + ray.getResistance());
                     }
                 }
             }

@@ -76,14 +76,12 @@ public class RayMapData {
 
     public int collideWith(UUID ray, int resistance){
         if(resistance > this.getResistance()){
-            InfusePlugin.get().getLOGGER().atInfo().log("becomeKing");
             this.setOtherRay(this.getRay());
             this.setRay(ray);
             this.setOtherResistance(this.getResistance());
             this.setResistance(resistance);
             return this.getResistance();
         }else {
-            InfusePlugin.get().getLOGGER().atInfo().log("becomeSideKick");
             this.setOtherRay(ray);
             this.setOtherResistance(resistance);
             return 0;
@@ -121,10 +119,8 @@ public class RayMapData {
 
     public boolean canUnPropagateAs(UUID ray){
         if(this.getRay() != null && this.otherRay != null){
-            InfusePlugin.get().getLOGGER().atInfo().log("Why are you here ?");
             return false;
         }else {
-            InfusePlugin.get().getLOGGER().atInfo().log("Why are you sayign false because " + ray + " vs " + this.getRay());
             return ray.equals(this.getRay());
         }
     }
@@ -140,7 +136,6 @@ public class RayMapData {
         }else if(uuid.equals(this.getOtherRay())){
             this.setOtherResistance(resistanceRemaining);
             if(this.getResistance() < this.getOtherResistance()){
-                InfusePlugin.get().getLOGGER().atInfo().log("Reverse : " + uuid);
                 this.reverseCollision();
             }
             return true;
