@@ -1,34 +1,28 @@
 package org.infuse.plugin.Interactions;
 
 import com.hypixel.hytale.codec.builder.BuilderCodec;
-import com.hypixel.hytale.component.AddReason;
 import com.hypixel.hytale.component.CommandBuffer;
-import com.hypixel.hytale.component.Component;
 import com.hypixel.hytale.component.Holder;
 import com.hypixel.hytale.math.vector.Vector3i;
 import com.hypixel.hytale.protocol.InteractionType;
-import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
 import com.hypixel.hytale.server.core.entity.InteractionContext;
-import com.hypixel.hytale.server.core.entity.entities.BlockEntity;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
-import com.hypixel.hytale.server.core.modules.entity.component.ActiveAnimationComponent;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
-import com.hypixel.hytale.server.core.modules.entity.stamina.StaminaModule;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.CooldownHandler;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.client.SimpleBlockInteraction;
-import com.hypixel.hytale.server.core.universe.world.PlayerUtil;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import com.hypixel.hytale.server.core.util.UUIDUtil;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
-import org.infuse.plugin.InfusePlugin;
+import org.infuse.plugin.Class.Emitter.EmitterMapData;
+import org.infuse.plugin.Class.Emitter.EmitterStorage;
 import org.infuse.plugin.Utils.RayUtil;
-import org.infuse.plugin.components.MEEmitterComponent;;
+import org.infuse.plugin.components.MEEmitterComponent;
+import java.util.UUID;
 
 public class EmitterCollideInteraction extends SimpleBlockInteraction {
 
@@ -63,7 +57,18 @@ public class EmitterCollideInteraction extends SimpleBlockInteraction {
 
                                 if(statMap != null){
                                     statMap.subtractStatValue(DefaultEntityStatTypes.getMana(), component.getCost());
-                                    boolean achieved = RayUtil.castRay(component.getResistance(), world.getBlockRotationIndex(vector3i.x, vector3i.y, vector3i.z), vector3i, store, world, false, component.getBlockId());
+
+                                    EmitterMapData mapData = EmitterStorage.get(vector3i.x, vector3i.y, vector3i.z);
+
+                                    UUID currentUUID;
+
+                                    if(mapData == null){
+                                        return;
+                                    }else{
+                                        currentUUID = mapData.uuid;
+                                    }
+
+                                    boolean achieved = RayUtil.castRay(component.getEmittedRay(), world.getBlockRotationIndex(vector3i.x, vector3i.y, vector3i.z), vector3i, store, world, false, currentUUID);
                                 }
                             }
                         }

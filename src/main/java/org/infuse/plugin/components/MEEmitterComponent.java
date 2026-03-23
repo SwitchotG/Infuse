@@ -6,7 +6,7 @@ import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.Component;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
-import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import org.infuse.plugin.Class.Ray.Ray;
 import org.infuse.plugin.InfusePlugin;
 
 import javax.annotation.Nonnull;
@@ -15,9 +15,9 @@ import java.util.UUID;
 public class MEEmitterComponent implements Component<ChunkStore> {
 
     public static final BuilderCodec<MEEmitterComponent> CODEC = BuilderCodec.builder(MEEmitterComponent.class, MEEmitterComponent::new)
-            .append(new KeyedCodec<>("Resistance", Codec.INTEGER),
-                    (comp, resistance) -> comp.resistance = resistance,
-                    comp -> comp.resistance)
+            .append(new KeyedCodec<>("Emitted Ray", Ray.CODEC),
+                    (comp, emittedRay) -> comp.emittedRay = emittedRay,
+                    comp -> comp.emittedRay)
             .add()
             .append(new KeyedCodec<>("Cost", Codec.INTEGER),
                     (comp, cost) -> comp.cost = cost,
@@ -29,7 +29,7 @@ public class MEEmitterComponent implements Component<ChunkStore> {
             .add()
             .build();
 
-    private int resistance;
+    private Ray emittedRay;
 
     private int cost;
 
@@ -37,12 +37,12 @@ public class MEEmitterComponent implements Component<ChunkStore> {
 
     private final UUID blockId;
 
-    public int getResistance() {
-        return resistance;
+    public Ray getEmittedRay() {
+        return emittedRay;
     }
 
-    public void setResistance(int resistance) {
-        this.resistance = resistance;
+    public void setEmittedRay(Ray emittedRay) {
+        this.emittedRay = emittedRay;
     }
 
     public int getCost() {
@@ -69,11 +69,18 @@ public class MEEmitterComponent implements Component<ChunkStore> {
         this.blockId = UUID.randomUUID();
     }
 
-    public MEEmitterComponent(int resistance, int cost, boolean isCreative) {
-        this.resistance = resistance;
+    public MEEmitterComponent(Ray resistance, int cost, boolean isCreative) {
+        this.emittedRay = resistance;
         this.cost = cost;
         this.creative = isCreative;
         this.blockId = UUID.randomUUID();
+    }
+
+    public MEEmitterComponent(Ray resistance, int cost, boolean isCreative, UUID blockId) {
+        this.emittedRay = resistance;
+        this.cost = cost;
+        this.creative = isCreative;
+        this.blockId = blockId;
     }
 
     public static ComponentType<ChunkStore, MEEmitterComponent> getComponentType() {
@@ -82,7 +89,6 @@ public class MEEmitterComponent implements Component<ChunkStore> {
 
     @Nonnull
     public MEEmitterComponent clone() {
-        MEEmitterComponent component = new MEEmitterComponent(this.resistance, this.cost, this.creative);
-        return component;
+        return new MEEmitterComponent(this.emittedRay, this.cost, this.creative, this.blockId);
     }
 }

@@ -46,7 +46,10 @@
       "Components": {
         "MEEmitterComponent": {
           "Resistance": 5,
-          "Cost": 3
+          "Cost": 3,
+          "Emitted Ray": {
+            "Resistance": 5
+          }
         }
       }
     },
@@ -54,7 +57,14 @@
       "Collision": {
         "Interactions": [
           {
-            "Type": "infuse_EmitterCollideinteraction"
+            "Type": "infuse_EmitterCollideInteraction"
+          }
+        ]
+      },
+      "CollisionLeave": {
+        "Interactions": [
+          {
+            "Type": "infuse_EmitterCollisionLeaveInteraction"
           }
         ]
       }

@@ -8,11 +8,14 @@ import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Int
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
+import org.infuse.plugin.Class.Ray.MEConsumerInputRay;
 import org.infuse.plugin.Interactions.EmitterCollideInteraction;
+import org.infuse.plugin.Interactions.EmitterCollisionLeaveInteraction;
 import org.infuse.plugin.commands.InfuseCommand;
 import org.infuse.plugin.components.*;
 import org.infuse.plugin.system.EmiteBreakSystem;
 import org.infuse.plugin.system.EmiteSystem;
+import org.infuse.plugin.system.MEConsumerSystem;
 import org.infuse.plugin.system.RayCleanupSystem;
 
 import javax.annotation.Nonnull;
@@ -28,6 +31,7 @@ public class InfusePlugin extends JavaPlugin {
     private ComponentType<ChunkStore, MEEmitterComponent> MEEmitterComponentType;
     private ComponentType<ChunkStore, METraversableComponent> METraversableComponentType;
     private ComponentType<ChunkStore, METransformableComponent> METransformableComponentType;
+    private ComponentType<ChunkStore, MEConsumerComponent> MEConsumerComponentType;
 
     public InfusePlugin(@Nonnull JavaPluginInit init) {
         super(init);
@@ -48,14 +52,17 @@ public class InfusePlugin extends JavaPlugin {
         this.MEEmitterComponentType = this.getChunkStoreRegistry().registerComponent(MEEmitterComponent.class, "MEEmitterComponent", MEEmitterComponent.CODEC);
         this.METraversableComponentType = this.getChunkStoreRegistry().registerComponent(METraversableComponent.class, "METraversableComponent", METraversableComponent.CODEC);
         this.METransformableComponentType = this.getChunkStoreRegistry().registerComponent(METransformableComponent.class, "METransformableComponent", METransformableComponent.CODEC);
+        this.MEConsumerComponentType = this.getChunkStoreRegistry().registerComponent(MEConsumerComponent.class, "MEConsumerComponent", MEConsumerComponent.CODEC);
 
         //System registry
         this.getChunkStoreRegistry().registerSystem(new EmiteSystem());
         this.getEntityStoreRegistry().registerSystem(new EmiteBreakSystem());
         this.getChunkStoreRegistry().registerSystem(new RayCleanupSystem());
+        this.getChunkStoreRegistry().registerSystem(new MEConsumerSystem());
 
         //Interaction registry
-        this.getCodecRegistry(Interaction.CODEC).register("infuse_EmitterCollideinteraction", EmitterCollideInteraction.class, EmitterCollideInteraction.CODEC);
+        this.getCodecRegistry(Interaction.CODEC).register("infuse_EmitterCollideInteraction", EmitterCollideInteraction.class, EmitterCollideInteraction.CODEC);
+        this.getCodecRegistry(Interaction.CODEC).register("infuse_EmitterCollisionLeaveInteraction", EmitterCollisionLeaveInteraction.class, EmitterCollisionLeaveInteraction.CODEC);
     }
 
     public ComponentType<ChunkStore, MEEmitterComponent> getMEEmitterComponentType(){
@@ -69,6 +76,10 @@ public class InfusePlugin extends JavaPlugin {
 
     public ComponentType<ChunkStore, METransformableComponent> getMETransformableComponentType(){
         return this.METransformableComponentType;
+    }
+
+    public ComponentType<ChunkStore, MEConsumerComponent> getMEConsumerComponentType(){
+        return this.MEConsumerComponentType;
     }
 
 

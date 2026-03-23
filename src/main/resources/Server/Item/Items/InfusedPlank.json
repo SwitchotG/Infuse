@@ -31,7 +31,26 @@
       }
     ],
     "ParticleColor": "#414439",
-    "BlockSoundSetId": "Wood"
+    "BlockSoundSetId": "Wood",
+    "BlockEntity": {
+      "Components": {
+        "MEConsumerComponent": {
+          "Inputs": [
+            {
+              "Direction": "South",
+              "Required": true
+            }
+          ],
+          "Outputs": [
+            {
+              "Direction": "East",
+              "Input to copy and modify": 1,
+              "Is Activated": true
+            }
+          ]
+        }
+      }
+    }
   },
   "ResourceTypes": [
     {

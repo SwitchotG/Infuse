@@ -8,7 +8,8 @@ import com.hypixel.hytale.math.vector.Vector3i;
 import com.hypixel.hytale.server.core.modules.block.BlockModule;
 import com.hypixel.hytale.server.core.universe.world.chunk.WorldChunk;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
-import org.infuse.plugin.InfusePlugin;
+import org.infuse.plugin.Class.Emitter.EmitterMapData;
+import org.infuse.plugin.Class.Emitter.EmitterStorage;
 import org.infuse.plugin.Utils.RayUtil;
 import org.infuse.plugin.components.MEEmitterComponent;
 
@@ -56,11 +57,15 @@ public class EmiteSystem extends EntityTickingSystem<ChunkStore> {
                         int x = chunkWorldX + localX;
                         int z = chunkWorldZ + localZ;
 
+                        if(EmitterStorage.get(x, y, z) == null){
+                            EmitterStorage.put(x, y, z, new EmitterMapData(component.getBlockId()));
+                        }
+
                         if(component.isCreative()){
                             if(store.isInThread() && !store.isShutdown()){
                                 cmd.run( s ->
                                         {
-                                                RayUtil.castRay(component.getResistance(),world.getBlockRotationIndex(x, y, z),new Vector3i(x, y, z),entityStore.getStore(),s.getExternalData().getWorld(), false, component.getBlockId());
+                                                RayUtil.castRay(component.getEmittedRay(),world.getBlockRotationIndex(x, y, z),new Vector3i(x, y, z),entityStore.getStore(),s.getExternalData().getWorld(), false, component.getBlockId());
                                         }
                                 );
                             }

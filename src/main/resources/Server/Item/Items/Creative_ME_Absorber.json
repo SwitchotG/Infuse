@@ -62,7 +62,10 @@
         "MEEmitterComponent": {
           "Resistance": 5,
           "Cost": 3,
-          "Creative": true
+          "Creative": true,
+          "Emitted Ray": {
+            "Resistance": 5
+          }
         }
       }
     },
