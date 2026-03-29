@@ -1,0 +1,13 @@
+{
+  "_BaseAssetPath": "Server/Item/Items/Furniture/Temple_Emerald/Furniture_Temple_Emerald_Window.json",
+  "BlockType": {
+    "BlockEntity": {
+      "Components": {
+        "METraversableComponent": {
+          "StoppingPower": 2
+        }
+      }
+    }
+  }
+}
+

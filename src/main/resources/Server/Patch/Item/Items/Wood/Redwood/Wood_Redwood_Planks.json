@@ -1,0 +1,12 @@
+{
+  "_BaseAssetPath": "Server/Item/Items/Wood/Redwood/Wood_Redwood_Planks.json",
+  "BlockType": {
+    "BlockEntity": {
+      "Components": {
+        "METransformableComponent": {
+          "TransformationId": "InfusedPlank"
+        }
+      }
+    }
+  }
+}

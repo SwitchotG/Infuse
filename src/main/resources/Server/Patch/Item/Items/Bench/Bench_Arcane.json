@@ -1,0 +1,19 @@
+{
+  "_BaseAssetPath": "Server/Item/Items/Bench/Bench_Arcane.json",
+  "BlockType": {
+    "Bench": {
+      "Categories": [
+        {
+          "_index": 1,
+          "_op": "upsert",
+          "_find": {
+            "Id": "Arcane_Infuse"
+          },
+          "Id": "Arcane_Infuse",
+          "Name": "infuse.benchCategories.workbench.infuse",
+          "Icon": "Icons/CraftingCategories/InfuseIcon.png"
+        }
+      ]
+    }
+  }
+}

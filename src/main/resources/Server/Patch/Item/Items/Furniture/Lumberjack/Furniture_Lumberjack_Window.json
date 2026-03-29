@@ -1,0 +1,12 @@
+{
+  "_BaseAssetPath": "Server/Item/Items/Furniture/Lumberjack/Furniture_Lumberjack_Window.json",
+  "BlockType": {
+    "BlockEntity": {
+      "Components": {
+        "METraversableComponent": {
+          "StoppingPower": 3
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "_BaseAssetPath": "Server/Item/Items/Furniture/Kweebec/Furniture_Kweebec_Window.json",
+  "BlockType": {
+    "BlockEntity": {
+      "Components": {
+        "METraversableComponent": {
+          "StoppingPower": 3
+        }
+      }
+    }
+  }
+}

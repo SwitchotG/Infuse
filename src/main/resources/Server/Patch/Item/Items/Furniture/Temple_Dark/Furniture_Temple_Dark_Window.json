@@ -1,0 +1,12 @@
+{
+  "_BaseAssetPath": "Server/Item/Items/Furniture/Temple_Dark/Furniture_Temple_Dark_Window.json",
+  "BlockType": {
+    "BlockEntity": {
+      "Components": {
+        "METraversableComponent": {
+          "StoppingPower": 2
+        }
+      }
+    }
+  }
+}

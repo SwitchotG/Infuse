@@ -1,0 +1,12 @@
+{
+  "_BaseAssetPath": "Server/Item/Items/Wood/Palo/Wood_Palo_Trunk.json",
+  "BlockType": {
+    "BlockEntity": {
+      "Components": {
+        "METransformableComponent": {
+          "TransformationId": "InfusedLog"
+        }
+      }
+    }
+  }
+}

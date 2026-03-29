@@ -1,0 +1,12 @@
+{
+  "_BaseAssetPath": "Server/Item/Items/Wood/Banyan/Wood_Banyan_Trunk.json",
+  "BlockType": {
+    "BlockEntity": {
+      "Components": {
+        "METransformableComponent": {
+          "TransformationId": "InfusedLog"
+        }
+      }
+    }
+  }
+}

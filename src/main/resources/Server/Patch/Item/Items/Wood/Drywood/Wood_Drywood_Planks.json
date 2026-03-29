@@ -1,0 +1,12 @@
+{
+  "_BaseAssetPath": "Server/Item/Items/Wood/Drywood/Wood_Drywood_Planks.json",
+  "BlockType": {
+    "BlockEntity": {
+      "Components": {
+        "METransformableComponent": {
+          "TransformationId": "InfusedLog"
+        }
+      }
+    }
+  }
+}

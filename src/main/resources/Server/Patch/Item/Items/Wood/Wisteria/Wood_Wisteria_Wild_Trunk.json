@@ -1,0 +1,12 @@
+{
+  "_BaseAssetPath": "Server/Item/Items/Wood/Wisteria/Wood_Wisteria_Trunk.json",
+  "BlockType": {
+    "BlockEntity": {
+      "Components": {
+        "METransformableComponent": {
+          "TransformationId": "InfusedLog"
+        }
+      }
+    }
+  }
+}

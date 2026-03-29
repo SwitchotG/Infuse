@@ -1,0 +1,13 @@
+{
+  "_BaseAssetPath": "Server/Item/Items/Plant/Grass/Plant_Grass_Snowy_Short.json",
+  "BlockType": {
+    "BlockEntity": {
+      "Components": {
+        "METraversableComponent": {
+          "StoppingPower": 1
+        }
+      }
+    }
+  }
+}
+

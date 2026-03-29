@@ -1,0 +1,12 @@
+{
+  "_BaseAssetPath": "Server/Item/Items/Furniture/Frozen/Furniture_Frozen_Castle_Window.json",
+  "BlockType": {
+    "BlockEntity": {
+      "Components": {
+        "METraversableComponent": {
+          "StoppingPower": 1
+        }
+      }
+    }
+  }
+}

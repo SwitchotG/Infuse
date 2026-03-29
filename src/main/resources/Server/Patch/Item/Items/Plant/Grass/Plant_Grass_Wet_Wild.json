@@ -1,0 +1,12 @@
+{
+  "_BaseAssetPath": "Server/Item/Items/Plant/Grass/Plant_Grass_Wet_Wild.json",
+  "BlockType": {
+    "BlockEntity": {
+      "Components": {
+        "METraversableComponent": {
+          "StoppingPower": 3
+        }
+      }
+    }
+  }
+}

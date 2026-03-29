@@ -50,7 +50,8 @@
           ]
         }
       }
-    }
+    },
+    "VariantRotation": "NESW"
   },
   "ResourceTypes": [
     {

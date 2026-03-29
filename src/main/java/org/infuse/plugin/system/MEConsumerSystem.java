@@ -8,6 +8,7 @@ import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
 import com.hypixel.hytale.math.util.ChunkUtil;
 import com.hypixel.hytale.math.vector.Vector3i;
 import com.hypixel.hytale.server.core.modules.block.BlockModule;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.chunk.WorldChunk;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
 import org.infuse.plugin.Class.Emitter.EmitterMapData;
@@ -75,14 +76,15 @@ public class MEConsumerSystem extends EntityTickingSystem<ChunkStore> {
                     EmitterMapData data = EmitterStorage.get(x, y, z);
 
                     if(data != null){
+                        int rotationXZ = world.getBlockRotationIndex(x, y, z)%4;
                         for (int i = 0; i < rayDirections.toArray().length; i++) {
-                            switch (rayDirections.get(i)) {
-                                case Up -> hasAllRay = (data.URay != null);
-                                case Down -> hasAllRay = (data.DRay != null);
-                                case North -> hasAllRay = (data.NRay != null);
-                                case East -> hasAllRay = (data.ERay != null);
-                                case South -> hasAllRay = (data.SRay != null);
-                                case West -> hasAllRay = (data.WRay != null);
+                            switch (getDirection(component, rayDirections.get(i).getValue(), rotationXZ)) {
+                                case 4 -> hasAllRay = (data.URay != null);
+                                case 12 -> hasAllRay = (data.DRay != null);
+                                case 1 -> hasAllRay = (data.NRay != null);
+                                case 2 -> hasAllRay = (data.ERay != null);
+                                case 3 -> hasAllRay = (data.SRay != null);
+                                case 0 -> hasAllRay = (data.WRay != null);
                             }
                             if(!hasAllRay){
                                 break;
@@ -99,7 +101,7 @@ public class MEConsumerSystem extends EntityTickingSystem<ChunkStore> {
 
                             if(Math.random() < 0.1) {
                                 for (int i = 0; i < component.getOutputs().length; i++) {
-                                    Ray ray = getRay(component, i, data);
+                                    Ray ray = getRay(component, i, data, rotationXZ);
 
                                     if (ray == null) {
                                         break;
@@ -112,11 +114,13 @@ public class MEConsumerSystem extends EntityTickingSystem<ChunkStore> {
                                         );
                                     }
 
+                                    int strictDirection = component.getOutputs()[i].getDirection().getValue();
+                                    int direction = getDirection(component, strictDirection, rotationXZ);
+
                                     if (store.isInThread() && !store.isShutdown()) {
-                                        int finalI = i;
                                         cmd.run(s ->
                                                 {
-                                                    RayUtil.castRay(ray, component.getOutputs()[finalI].getDirection().getValue(), new Vector3i(x, y, z), entityStore.getStore(), s.getExternalData().getWorld(), false, component.getBlockId());
+                                                    RayUtil.castRay(ray, direction, new Vector3i(x, y, z), entityStore.getStore(), s.getExternalData().getWorld(), false, component.getBlockId());
                                                 }
                                         );
                                     }
@@ -136,19 +140,83 @@ public class MEConsumerSystem extends EntityTickingSystem<ChunkStore> {
         }
     }
 
-    private static Ray getRay(MEConsumerComponent component, int i, EmitterMapData data) {
+    private static int getDirection(MEConsumerComponent component, int i, int rotationXZ) {
+
+        int returnValue = i;
+
+        if(returnValue == 12 || returnValue == 4){
+            return returnValue;
+        }
+
+        if(rotationXZ == 1){
+            switch (i) {
+                case 1 -> returnValue = 2;
+                case 2 -> returnValue = 3;
+                case 3 -> returnValue = 0;
+                case 0 -> returnValue = 1;
+            }
+        }else if(rotationXZ == 2){
+            switch (i) {
+                case 1 -> returnValue = 3;
+                case 2 -> returnValue = 0;
+                case 3 -> returnValue = 1;
+                case 0 -> returnValue = 2;
+            }
+        }else if(rotationXZ == 3){
+            switch (i) {
+                case 1 -> returnValue = 0;
+                case 2 -> returnValue = 1;
+                case 3 -> returnValue = 2;
+                case 0 -> returnValue = 3;
+            }
+        }
+        return returnValue;
+    }
+
+    private static Ray getRay(MEConsumerComponent component, int i, EmitterMapData data, int rotationXZ) {
         MEConsumerInputRay inputRay = component.getInputs()[component.getOutputs()[i].getInputRay() - 1];
         Ray ray = null;
 
 
-        switch (inputRay.getDirection()) {
-            case Up -> ray = data.URay;
-            case Down -> ray = data.DRay;
-            case North -> ray = data.NRay;
-            case East -> ray = data.ERay;
-            case South -> ray = data.SRay;
-            case West -> ray = data.WRay;
+
+        if(rotationXZ == 0){
+            switch (inputRay.getDirection()) {
+                case Up -> ray = data.URay;
+                case Down -> ray = data.DRay;
+                case North -> ray = data.NRay;
+                case East -> ray = data.ERay;
+                case South -> ray = data.SRay;
+                case West -> ray = data.WRay;
+            }
+        }else if(rotationXZ == 1){
+            switch (inputRay.getDirection()) {
+                case Up -> ray = data.URay;
+                case Down -> ray = data.DRay;
+                case North -> ray = data.ERay;
+                case East -> ray = data.SRay;
+                case South -> ray = data.WRay;
+                case West -> ray = data.NRay;
+            }
+        }else if(rotationXZ == 2){
+            switch (inputRay.getDirection()) {
+                case Up -> ray = data.URay;
+                case Down -> ray = data.DRay;
+                case North -> ray = data.SRay;
+                case East -> ray = data.WRay;
+                case South -> ray = data.NRay;
+                case West -> ray = data.ERay;
+            }
+        }else{
+            switch (inputRay.getDirection()) {
+                case Up -> ray = data.URay;
+                case Down -> ray = data.DRay;
+                case North -> ray = data.WRay;
+                case East -> ray = data.NRay;
+                case South -> ray = data.ERay;
+                case West -> ray = data.SRay;
+            }
         }
+
         return ray;
     }
 }

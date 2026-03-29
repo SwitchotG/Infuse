@@ -1,0 +1,12 @@
+{
+  "_BaseAssetPath": "Server/Item/Items/Furniture/Temple_Scarak/Furniture_Temple_Scarak_Window.json",
+  "BlockType": {
+    "BlockEntity": {
+      "Components": {
+        "METraversableComponent": {
+          "StoppingPower": 2
+        }
+      }
+    }
+  }
+}

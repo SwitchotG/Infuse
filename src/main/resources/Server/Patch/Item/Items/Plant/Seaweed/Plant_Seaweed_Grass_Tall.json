@@ -1,0 +1,12 @@
+{
+  "_BaseAssetPath": "Server/Item/Items/Plant/Seaweed/Plant_Seaweed_Grass_Tall.json",
+  "BlockType": {
+    "BlockEntity": {
+      "Components": {
+        "METraversableComponent": {
+          "StoppingPower": 3
+        }
+      }
+    }
+  }
+}

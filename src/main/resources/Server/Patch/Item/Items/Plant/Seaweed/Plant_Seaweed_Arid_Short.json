@@ -1,0 +1,12 @@
+{
+  "_BaseAssetPath": "Server/Item/Items/Plant/Seaweed/Plant_Seaweed_Arid_Short.json",
+  "BlockType": {
+    "BlockEntity": {
+      "Components": {
+        "METraversableComponent": {
+          "StoppingPower": 2
+        }
+      }
+    }
+  }
+}

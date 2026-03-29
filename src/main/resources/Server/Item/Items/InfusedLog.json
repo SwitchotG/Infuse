@@ -104,7 +104,14 @@
       }
     },
     "BlockBreakingDecalId": "Breaking_Decals_Wood",
-    "IgnoreSupportWhenPlaced": true
+    "IgnoreSupportWhenPlaced": true,
+    "BlockEntity": {
+      "Components": {
+        "Block": {
+          "Version": 1
+        }
+      }
+    }
   },
   "ResourceTypes": [
     {

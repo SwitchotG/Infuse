@@ -11,15 +11,27 @@ public class Ray {
                     (comp, resistance) -> comp.resistance = resistance,
                     comp -> comp.resistance)
             .add()
+            .append(new KeyedCodec<>("Power", Codec.INTEGER),
+                    (comp, power) -> comp.power = power,
+                    comp -> comp.power)
+            .add()
+            .append(new KeyedCodec<>("Ray Type", RayType.CODEC),
+                    (comp, rayType) -> comp.rayType = rayType,
+                    comp -> comp.rayType)
+            .add()
             .build();
 
     private int resistance;
+
+    private int power;
+
+    private RayType rayType;
 
     public Ray(){
         resistance = 0;
     }
 
-    public Ray(int resistance) {
+    public Ray(int resistance, int power, RayType rayType) {
         this.resistance = resistance;
     }
 
@@ -31,7 +43,23 @@ public class Ray {
         this.resistance = resistance;
     }
 
+    public int getPower() {
+        return power;
+    }
+
+    public void setPower(int power) {
+        this.power = power;
+    }
+
+    public RayType getRayType() {
+        return rayType;
+    }
+
+    public void setRayType(RayType rayType) {
+        this.rayType = rayType;
+    }
+
     public Ray clone(){
-        return new Ray(this.resistance);
+        return new Ray(this.resistance, this.power, this.rayType);
     }
 }
