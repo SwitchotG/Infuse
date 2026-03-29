@@ -1,0 +1,142 @@
+{
+  "TranslationProperties": {
+    "Name": "infuse.absorber.name",
+    "Description": "infuse.absorber.desc"
+  },
+  "Id": "Absorber",
+  "MaxStack": 100,
+  "Categories": [
+    "Blocks.Rocks"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Set": "Rock_Stone",
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "Cloth_Block_Wool_Purple_Light",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Ingredient_Crystal_Green",
+        "Quantity": 1
+      },
+      {
+        "ResourceTypeId": "Rock",
+        "Quantity": 1
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "Arcanebench",
+        "Categories": [
+          "Arcane_Infuse"
+        ]
+      }
+    ],
+    "Output": [
+      {
+        "ItemId": "ME_Absorber"
+      }
+    ],
+    "TimeSeconds": 5
+  },
+  "Model": "Blocks/E-Absorber.blockymodel",
+  "Texture": "BlockTextures/me_absorber.png",
+  "Icon": "Icons/ItemsGenerated/ME_Mirror.png",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      23,
+      89,
+      25
+    ],
+    "Translation": [
+      -7,
+      -23
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Group": "Stone",
+    "Flags": {},
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks",
+        "ItemId": "ME_Absorber"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#3a3a3a",
+    "BlockSoundSetId": "Stone",
+    "BlockBreakingDecalId": "Breaking_Decals_Rock",
+    "PlacementSettings": {
+      "AllowRotationKey": true,
+      "PlaceInEmptyBlocks": true,
+      "BlockPreviewVisibility": "AlwaysVisible"
+    },
+    "VariantRotation": "NESW",
+    "HitboxType": "Absorber_Hibox",
+    "CustomModel": "Blocks/ME-Mirror.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "BlockTextures/me_mirror.png"
+      }
+    ],
+    "CustomModelAnimation": "Blocks/Offstate-Absorber.blockyanim",
+    "BlockEntity": {
+      "Components": {
+        "MEConsumerComponent": {
+          "Inputs": [
+            {
+              "Required": true,
+              "Direction": "North"
+            }
+          ],
+          "Outputs": [
+            {
+              "Input to copy and modify": 1,
+              "Is Activated": true,
+              "Direction": "East"
+            }
+          ],
+          "Ray Inputs Outputs :": [
+            {
+              "Inputs": [
+                {
+                  "Required": true,
+                  "Direction": "North"
+                }
+              ],
+              "Outputs": [
+                {
+                  "Direction": "East",
+                  "Input to copy and modify": 1,
+                  "Is Activated": true
+                }
+              ]
+            },
+            {
+              "Inputs": [
+                {
+                  "Direction": "East",
+                  "Required": true
+                }
+              ],
+              "Outputs": [
+                {
+                  "Direction": "North",
+                  "Is Activated": true,
+                  "Input to copy and modify": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "Opacity": "Cutout",
+    "RequiresAlphaBlending": true
+  }
+}
