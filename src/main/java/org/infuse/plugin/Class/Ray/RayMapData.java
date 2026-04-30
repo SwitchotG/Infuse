@@ -11,6 +11,8 @@ public class RayMapData {
     private UUID otherRay;
     private int otherResistance;
     private int resistance;
+    private int power;
+    private RayType type;
 
     public RayMapData(){
         this.uuid = UUID.randomUUID();
@@ -20,14 +22,18 @@ public class RayMapData {
         this.uuid = UUID.randomUUID();
         this.ray = ray;
         this.resistance = resistanceRemaining;
+        this.power = 1;
+        this.type = RayType.Basic;
     }
 
-    public RayMapData(UUID ray, UUID otherRay, int otherResistance, int resistance){
+    public RayMapData(UUID ray, UUID otherRay, int otherResistance, int resistance, int power, RayType type){
         this.uuid = UUID.randomUUID();
         this.ray = ray;
         this.otherRay = otherRay;
         this.otherResistance = otherResistance;
         this.resistance = resistance;
+        this.power = power;
+        this.type = type;
     }
 
     public UUID getUuid() {
@@ -74,12 +80,30 @@ public class RayMapData {
         return this.getResistance() - this.getOtherResistance();
     }
 
-    public int collideWith(UUID ray, int resistance){
+    public int getPower() {
+        return power;
+    }
+
+    public void setPower(int power) {
+        this.power = power;
+    }
+
+    public RayType getType() {
+        return type;
+    }
+
+    public void setType(RayType type) {
+        this.type = type;
+    }
+
+    public int collideWith(UUID ray, int resistance, int power, RayType type){
         if(resistance > this.getResistance()){
             this.setOtherRay(this.getRay());
             this.setRay(ray);
             this.setOtherResistance(this.getResistance());
             this.setResistance(resistance);
+            this.setPower(power);
+            this.setType(type);
             return this.getResistance();
         }else {
             this.setOtherRay(ray);
@@ -104,13 +128,15 @@ public class RayMapData {
         }
     }
 
-    public boolean propagateAs(UUID ray, int resistance){
+    public boolean propagateAs(UUID ray, int resistance, int power, RayType type){
         if(this.getRay() == null){
             this.setRay(ray);
             this.setResistance(resistance);
+            this.setPower(power);
+            this.setType(type);
             return true;
         }else if(this.getOtherRay() == null){
-            this.collideWith(ray, resistance);
+            this.collideWith(ray, resistance, power, type);
             return true;
         }else{
             return false;

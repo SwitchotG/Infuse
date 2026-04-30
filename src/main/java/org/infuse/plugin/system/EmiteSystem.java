@@ -25,7 +25,6 @@ public class EmiteSystem extends EntityTickingSystem<ChunkStore> {
     @Override
     public void tick(float dt, int index, ArchetypeChunk<ChunkStore> chunk,
                      Store<ChunkStore> store, CommandBuffer<ChunkStore> cmd) {
-        if(Math.random() < 0.1){
             var block = chunk.getReferenceTo(index);
 
 
@@ -70,7 +69,6 @@ public class EmiteSystem extends EntityTickingSystem<ChunkStore> {
                         }
                     }
                 }
-            }
         }
     }
 

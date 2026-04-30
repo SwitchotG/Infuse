@@ -10,11 +10,7 @@ import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.infuse.plugin.Class.Emitter.EmitterStorage;
-import org.infuse.plugin.Class.Ray.Ray;
-import org.infuse.plugin.Class.Ray.RayDirection;
-import org.infuse.plugin.Class.Ray.RayMapData;
-import org.infuse.plugin.Class.Ray.RayStorage;
-import org.infuse.plugin.InfusePlugin;
+import org.infuse.plugin.Class.Ray.*;
 import org.infuse.plugin.components.*;
 
 import java.util.UUID;
@@ -79,7 +75,7 @@ public final class RayUtil {
         }else{
             if(ray != null){
                 if(!ray.canPropagate(uuid)){
-                    ray.collideWith(uuid, resistanceLeft);
+                    ray.collideWith(uuid, resistanceLeft, emittedRay.getPower(), emittedRay.getRayType());
                     if(ray.needToUpdateCollision(uuid)){
                         ray.update(uuid, resistanceLeft);
                     }
@@ -132,14 +128,45 @@ public final class RayUtil {
             }
             if(ray != null){
                 if(!ray.isPresent(uuid)){
-                    ray.propagateAs(uuid, resistanceLeft);
+                    ray.propagateAs(uuid, resistanceLeft, emittedRay.getPower(), emittedRay.getRayType());
                 }else{
                     ray.update(uuid, resistanceLeft);
                 }
             }else{
                 RayStorage.put(x, y, z, new RayMapData(uuid, resistanceLeft));
             }
-            ParticleUtil.spawnParticleEffect("Mana_Small_Explosion", new Vector3d(vector3i.x + 0.5, vector3i.y, vector3i.z + 0.5), store);
+
+            String particuleName;
+
+            if(emittedRay.getRayType() != null){
+                switch(emittedRay.getRayType()){
+                    case RayType.Earth -> {
+                        particuleName = "Mana_Earth_Small_Explosion";
+                    }
+                    case RayType.Fire -> {
+                        particuleName = "Mana_Fire_Small_Explosion";
+                    }
+                    case RayType.Lightning -> {
+                        particuleName = "Mana_Lightning_Small_Explosion";
+                    }
+                    case RayType.Void -> {
+                        particuleName = "Mana_Void_Small_Explosion";
+                    }
+                    case RayType.Water -> {
+                        particuleName = "Mana_Water_Small_Explosion";
+                    }
+                    case RayType.Wind -> {
+                        particuleName = "Mana_Wind_Small_Explosion";
+                    }
+                    default -> {
+                        particuleName = "Mana_Small_Explosion";
+                    }
+                }
+            }else{
+                particuleName = "Mana_Small_Explosion";
+            }
+
+            ParticleUtil.spawnParticleEffect(particuleName, new Vector3d(vector3i.x + 0.5, vector3i.y, vector3i.z + 0.5), store);
         }
 
         return returnedResistance;

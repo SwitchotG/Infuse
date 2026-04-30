@@ -1,0 +1,15 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "Mana_FireParticule",
+      "PositionOffset": {
+        "Y": 0.5,
+        "X": 0.0,
+        "Z": 0.0
+      }
+    }
+  ],
+  "BoundingRadius": 100.0,
+  "CullDistance": 100.0,
+  "IsImportant": false
+}

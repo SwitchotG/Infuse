@@ -55,10 +55,10 @@ public class InfusePlugin extends JavaPlugin {
         this.MEConsumerComponentType = this.getChunkStoreRegistry().registerComponent(MEConsumerComponent.class, "MEConsumerComponent", MEConsumerComponent.CODEC);
 
         //System registry
-        this.getChunkStoreRegistry().registerSystem(new EmiteSystem());
-        this.getEntityStoreRegistry().registerSystem(new EmiteBreakSystem());
-        this.getChunkStoreRegistry().registerSystem(new RayCleanupSystem());
-        this.getChunkStoreRegistry().registerSystem(new MEConsumerSystem());
+        //this.getChunkStoreRegistry().registerSystem(new EmiteSystem());
+        //this.getEntityStoreRegistry().registerSystem(new EmiteBreakSystem());
+        //this.getChunkStoreRegistry().registerSystem(new RayCleanupSystem());
+        //this.getChunkStoreRegistry().registerSystem(new MEConsumerSystem());
 
         //Interaction registry
         this.getCodecRegistry(Interaction.CODEC).register("infuse_EmitterCollideInteraction", EmitterCollideInteraction.class, EmitterCollideInteraction.CODEC);

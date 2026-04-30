@@ -84,7 +84,6 @@
         "Texture": "BlockTextures/me_mirror.png"
       }
     ],
-    "CustomModelAnimation": "Blocks/Offstate-Absorber.blockyanim",
     "BlockEntity": {
       "Components": {
         "MEConsumerComponent": {
@@ -136,7 +135,7 @@
         }
       }
     },
-    "Opacity": "Cutout",
-    "RequiresAlphaBlending": true
+    "Opacity": "Transparent",
+    "RequiresAlphaBlending": false
   }
 }

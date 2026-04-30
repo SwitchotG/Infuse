@@ -1,0 +1,12 @@
+{
+  "_BaseAssetPath": "Server/Item/Items/Rock/Stone/Rock_Stone.json",
+  "BlockType": {
+    "BlockEntity": {
+      "Components": {
+        "METransformableComponent": {
+          "TransformationId": "Infused_Rock_Stone"
+        }
+      }
+    }
+  }
+}

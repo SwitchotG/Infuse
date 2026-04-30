@@ -103,8 +103,6 @@ public class MEConsumerSystem extends EntityTickingSystem<ChunkStore> {
                                 if (EmitterStorage.get(x, y, z) == null) {
                                     EmitterStorage.put(x, y, z, new EmitterMapData(component.getBlockId()));
                                 }
-
-                                if (Math.random() < 0.2) {
                                     for (int j = 0; j < component.getRayIOs()[i].getOutputs().length; j++) {
                                         Ray ray = getRay(component, i, j, data, rotationXZ);
 
@@ -113,7 +111,7 @@ public class MEConsumerSystem extends EntityTickingSystem<ChunkStore> {
                                             break;
                                         }
 
-                                        for (int k = 0; k < component.getRayIOs()[i].getOutputs()[k].getRayModification().getTypes().length; k++) {
+                                        for (int k = 0; k < component.getRayIOs()[i].getOutputs()[j].getRayModification().getTypes().length; k++) {
                                             component.getRayIOs()[i].getOutputs()[j].getRayModification().getTypes()[k].modify(
                                                     ray
                                                     , component.getRayIOs()[i].getOutputs()[j].getRayModification().getModification()
@@ -123,7 +121,6 @@ public class MEConsumerSystem extends EntityTickingSystem<ChunkStore> {
                                         int strictDirection = component.getRayIOs()[i].getOutputs()[j].getDirection().getValue();
                                         int direction = getDirection(component, strictDirection, rotationXZ);
 
-                                        InfusePlugin.get().getLOGGER().atInfo().log("Output : " + direction);
                                         if (store.isInThread() && !store.isShutdown()) {
                                             cmd.run(s ->
                                                     {
@@ -137,7 +134,6 @@ public class MEConsumerSystem extends EntityTickingSystem<ChunkStore> {
                                         data.DRay = null;
                                         data.ERay = null;
                                         data.URay = null;
-                                    }
                                 }
                             }
                         }
@@ -182,13 +178,10 @@ public class MEConsumerSystem extends EntityTickingSystem<ChunkStore> {
 
     private static Ray getRay(MEConsumerComponent component, int i, int j, EmitterMapData data, int rotationXZ) {
         if(component.getRayIOs()[i].getOutputs()[j].getInputRay() == 0){
-            InfusePlugin.get().getLOGGER().atInfo().log("La valeur Input to copy ne peut pas être 0 !");
             return null;
         }
         MEConsumerInputRay inputRay = component.getRayIOs()[i].getInputs()[component.getRayIOs()[i].getOutputs()[j].getInputRay() - 1];
         Ray ray = null;
-
-        InfusePlugin.get().getLOGGER().atInfo().log("Infos : " + rotationXZ + " Direction : " + inputRay.getDirection());
 
 
         if(rotationXZ == 0){

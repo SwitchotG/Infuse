@@ -9,7 +9,8 @@ public enum RayType {
     Lightning,
     Wind,
     Earth,
-    Void;
+    Void,
+    Basic;
 
     public static final Codec<RayType> CODEC =
             new EnumCodec<>(RayType.class);
