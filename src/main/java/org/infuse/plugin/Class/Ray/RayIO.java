@@ -30,6 +30,8 @@ public class RayIO {
 
     private IRayReaction[] reactions;
 
+    private int lastFinalResistance = 0;
+
     public RayIO() {
         inputs = new MEConsumerInputRay[0];
         outputs = new MEConsumerOutputRay[0];
@@ -70,5 +72,13 @@ public class RayIO {
 
     public void setReactions(IRayReaction[] reactions) {
         this.reactions = reactions;
+    }
+
+    public int getLastFinalResistance() {
+        return lastFinalResistance;
+    }
+
+    public void setLastFinalResistance(int lastFinalResistance) {
+        this.lastFinalResistance = lastFinalResistance;
     }
 }

@@ -5,7 +5,7 @@ import com.hypixel.hytale.component.AddReason;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Component;
 import com.hypixel.hytale.component.Holder;
-import com.hypixel.hytale.math.vector.Vector3i;
+import org.joml.Vector3i;
 import com.hypixel.hytale.protocol.InteractionType;
 import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
 import com.hypixel.hytale.server.core.entity.InteractionContext;
@@ -28,7 +28,8 @@ import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 import org.infuse.plugin.InfusePlugin;
 import org.infuse.plugin.Utils.RayUtil;
-import org.infuse.plugin.components.MEEmitterComponent;;
+import org.infuse.plugin.components.MEEmitterComponent;
+import java.util.HashSet;
 
 public class EmitterCollisionLeaveInteraction extends SimpleBlockInteraction {
 
@@ -47,7 +48,7 @@ public class EmitterCollisionLeaveInteraction extends SimpleBlockInteraction {
             MEEmitterComponent component = componentHolder.getComponent(MEEmitterComponent.getComponentType());
             if(component != null){
                 int rotation = world.getBlockRotationIndex(vector3i.x, vector3i.y, vector3i.z);
-                RayUtil.destroyRay(vector3i.x, vector3i.y, vector3i.z, component, rotation);
+                RayUtil.destroyRay(vector3i.x, vector3i.y, vector3i.z, component.getEmittedRay().getResistance(),rotation, world, new HashSet<>());
             }
         }
 

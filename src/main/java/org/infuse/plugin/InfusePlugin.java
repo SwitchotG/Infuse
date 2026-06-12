@@ -8,15 +8,11 @@ import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Int
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
-import org.infuse.plugin.Class.Ray.MEConsumerInputRay;
 import org.infuse.plugin.Interactions.EmitterCollideInteraction;
 import org.infuse.plugin.Interactions.EmitterCollisionLeaveInteraction;
 import org.infuse.plugin.commands.InfuseCommand;
 import org.infuse.plugin.components.*;
-import org.infuse.plugin.system.EmiteBreakSystem;
-import org.infuse.plugin.system.EmiteSystem;
-import org.infuse.plugin.system.MEConsumerSystem;
-import org.infuse.plugin.system.RayCleanupSystem;
+import org.infuse.plugin.system.*;
 
 import javax.annotation.Nonnull;
 
@@ -55,10 +51,12 @@ public class InfusePlugin extends JavaPlugin {
         this.MEConsumerComponentType = this.getChunkStoreRegistry().registerComponent(MEConsumerComponent.class, "MEConsumerComponent", MEConsumerComponent.CODEC);
 
         //System registry
-        //this.getChunkStoreRegistry().registerSystem(new EmiteSystem());
-        //this.getEntityStoreRegistry().registerSystem(new EmiteBreakSystem());
-        //this.getChunkStoreRegistry().registerSystem(new RayCleanupSystem());
-        //this.getChunkStoreRegistry().registerSystem(new MEConsumerSystem());
+        this.getChunkStoreRegistry().registerSystem(new EmiteSystem());
+        this.getEntityStoreRegistry().registerSystem(new EmiteBreakSystem());
+        this.getChunkStoreRegistry().registerSystem(new MEConsumerSystem());
+        this.getEntityStoreRegistry().registerSystem(new BreakingRayDirtySystem());
+        this.getEntityStoreRegistry().registerSystem(new PlacingRayDirtySystem());
+        this.getChunkStoreRegistry().registerSystem(new RayParticleSystem());
 
         //Interaction registry
         this.getCodecRegistry(Interaction.CODEC).register("infuse_EmitterCollideInteraction", EmitterCollideInteraction.class, EmitterCollideInteraction.CODEC);

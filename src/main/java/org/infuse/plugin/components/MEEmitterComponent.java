@@ -35,6 +35,8 @@ public class MEEmitterComponent implements Component<ChunkStore> {
 
     private boolean creative;
 
+    private transient boolean isDirty = true;
+
     private final UUID blockId;
 
     public Ray getEmittedRay() {
@@ -63,6 +65,18 @@ public class MEEmitterComponent implements Component<ChunkStore> {
 
     public UUID getBlockId() {
         return blockId;
+    }
+
+    public boolean isDirty() {
+        return isDirty;
+    }
+
+    public void markDirty() {
+        isDirty = true;
+    }
+
+    public void clearDirty(){
+        isDirty = false;
     }
 
     public MEEmitterComponent() {

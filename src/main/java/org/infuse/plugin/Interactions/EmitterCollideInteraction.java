@@ -3,7 +3,7 @@ package org.infuse.plugin.Interactions;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Holder;
-import com.hypixel.hytale.math.vector.Vector3i;
+import org.joml.Vector3i;
 import com.hypixel.hytale.protocol.InteractionType;
 import com.hypixel.hytale.server.core.entity.InteractionContext;
 import com.hypixel.hytale.server.core.entity.entities.Player;
@@ -41,8 +41,8 @@ public class EmitterCollideInteraction extends SimpleBlockInteraction {
                 var playerTransform = player.getStore().getComponent(player, TransformComponent.getComponentType());
 
                 if (playerTransform != null) {
-                    var playerY = playerTransform.getPosition().getY();
-                    var positionY = vector3i.getY();
+                    var playerY = playerTransform.getPosition().y();
+                    var positionY = vector3i.y();
 
 
                     if (playerY - 0.75 == positionY) {

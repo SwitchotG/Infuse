@@ -6,7 +6,7 @@ import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
 import com.hypixel.hytale.math.util.ChunkUtil;
-import com.hypixel.hytale.math.vector.Vector3i;
+import org.joml.Vector3i;
 import com.hypixel.hytale.server.core.modules.block.BlockModule;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.chunk.WorldChunk;
@@ -41,6 +41,10 @@ public class MEConsumerSystem extends EntityTickingSystem<ChunkStore> {
         var component = store.getComponent(block, MEConsumerComponent.getComponentType());
 
         if(component != null){
+
+            if(!component.isDirty()){
+                return;
+            }
 
             var world = store.getExternalData().getWorld();
 
@@ -78,9 +82,15 @@ public class MEConsumerSystem extends EntityTickingSystem<ChunkStore> {
                                 }
                             }
 
-                            int rotationXZ = world.getBlockRotationIndex(x, y, z)%4;
+                            int rotationXZ = 0;
+                            if(world.getBlockRotationIndex(x, y, z) == 4 || world.getBlockRotationIndex(x, y, z) == 12){
+                                rotationXZ = world.getBlockRotationIndex(x, y, z);
+                            }else{
+                                rotationXZ = world.getBlockRotationIndex(x, y, z)%4;
+                            }
+
                             for (int j = 0; j < rayDirections.toArray().length; j++) {
-                                switch (getDirection(component, rayDirections.get(j).getValue(), rotationXZ)) {
+                                switch (RayUtil.getRayDirectionFromBlockRotation(rayDirections.get(j).getValue(), rotationXZ)) {
                                     case 4 -> hasAllRay = (data.URay != null);
                                     case 12 -> hasAllRay = (data.DRay != null);
                                     case 1 -> hasAllRay = (data.NRay != null);
@@ -90,8 +100,6 @@ public class MEConsumerSystem extends EntityTickingSystem<ChunkStore> {
                                 }
                                 if(!hasAllRay){
                                     break;
-                                }else{
-                                    InfusePlugin.get().getLOGGER().atInfo().log("Input : " + getDirection(component, rayDirections.get(j).getValue(), rotationXZ));
                                 }
 
                             }
@@ -107,7 +115,6 @@ public class MEConsumerSystem extends EntityTickingSystem<ChunkStore> {
                                         Ray ray = getRay(component, i, j, data, rotationXZ);
 
                                         if (ray == null) {
-                                            InfusePlugin.get().getLOGGER().atInfo().log("Le rayon est nulle...");
                                             break;
                                         }
 
@@ -119,21 +126,18 @@ public class MEConsumerSystem extends EntityTickingSystem<ChunkStore> {
                                         }
 
                                         int strictDirection = component.getRayIOs()[i].getOutputs()[j].getDirection().getValue();
-                                        int direction = getDirection(component, strictDirection, rotationXZ);
+                                        int direction = RayUtil.getRayDirectionFromBlockRotation(strictDirection, rotationXZ);
+
+                                        component.getRayIOs()[i].setLastFinalResistance(ray.getResistance());
 
                                         if (store.isInThread() && !store.isShutdown()) {
+                                            component.setActivated(true);
                                             cmd.run(s ->
                                                     {
                                                         RayUtil.castRay(ray, direction, new Vector3i(x, y, z), entityStore.getStore(), s.getExternalData().getWorld(), false, component.getBlockId());
                                                     }
                                             );
                                         }
-                                        data.SRay = null;
-                                        data.WRay = null;
-                                        data.NRay = null;
-                                        data.DRay = null;
-                                        data.ERay = null;
-                                        data.URay = null;
                                 }
                             }
                         }
@@ -141,39 +145,6 @@ public class MEConsumerSystem extends EntityTickingSystem<ChunkStore> {
                 }
             }
         }
-    }
-
-    private static int getDirection(MEConsumerComponent component, int i, int rotationXZ) {
-
-        int returnValue = i;
-
-        if(returnValue == 12 || returnValue == 4){
-            return returnValue;
-        }
-
-        if(rotationXZ == 1){
-            switch (i) {
-                case 1 -> returnValue = 2;
-                case 2 -> returnValue = 3;
-                case 3 -> returnValue = 0;
-                case 0 -> returnValue = 1;
-            }
-        }else if(rotationXZ == 2){
-            switch (i) {
-                case 1 -> returnValue = 3;
-                case 2 -> returnValue = 0;
-                case 3 -> returnValue = 1;
-                case 0 -> returnValue = 2;
-            }
-        }else if(rotationXZ == 3){
-            switch (i) {
-                case 1 -> returnValue = 0;
-                case 2 -> returnValue = 1;
-                case 3 -> returnValue = 2;
-                case 0 -> returnValue = 3;
-            }
-        }
-        return returnValue;
     }
 
     private static Ray getRay(MEConsumerComponent component, int i, int j, EmitterMapData data, int rotationXZ) {

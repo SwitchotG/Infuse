@@ -26,14 +26,19 @@ public class MEConsumerComponent implements Component<ChunkStore> {
 
     private RayIO[] rayIOs;
 
+    private transient boolean isDirty = true;
+
+    private transient boolean isActivated = false;
+
     public MEConsumerComponent(){
         rayIOs = new RayIO[0];
         this.blockId = UUID.randomUUID();
     }
 
-    public MEConsumerComponent(RayIO[] rayIOs){
+    public MEConsumerComponent(RayIO[] rayIOs, boolean isActivated){
         this.rayIOs = rayIOs;
         this.blockId = UUID.randomUUID();
+        this.isActivated = isActivated;
     }
     public UUID getBlockId() {
         return blockId;
@@ -47,12 +52,32 @@ public class MEConsumerComponent implements Component<ChunkStore> {
         this.rayIOs = rayIOs;
     }
 
+    public boolean isDirty() {
+        return isDirty;
+    }
+
+    public void markDirty() {
+        isDirty = true;
+    }
+
+    public void clearDirty(){
+        isDirty = false;
+    }
+
+    public boolean isActivated() {
+        return isActivated;
+    }
+
+    public void setActivated(boolean activated) {
+        isActivated = activated;
+    }
+
     public static ComponentType<ChunkStore, MEConsumerComponent> getComponentType() {
         return InfusePlugin.get().getMEConsumerComponentType();
     }
 
     @Nonnull
     public MEConsumerComponent clone() {
-        return new MEConsumerComponent(this.rayIOs);
+        return new MEConsumerComponent(this.rayIOs, this.isActivated);
     }
 }

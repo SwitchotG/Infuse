@@ -2,8 +2,10 @@ package org.infuse.plugin.Utils;
 
 import com.hypixel.hytale.component.Holder;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.math.vector.Vector3d;
-import com.hypixel.hytale.math.vector.Vector3i;
+import com.hypixel.hytale.math.util.ChunkUtil;
+import org.infuse.plugin.InfusePlugin;
+import org.joml.Vector3d;
+import org.joml.Vector3i;
 import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
 import com.hypixel.hytale.server.core.universe.world.ParticleUtil;
 import com.hypixel.hytale.server.core.universe.world.World;
@@ -13,6 +15,7 @@ import org.infuse.plugin.Class.Emitter.EmitterStorage;
 import org.infuse.plugin.Class.Ray.*;
 import org.infuse.plugin.components.*;
 
+import java.util.Set;
 import java.util.UUID;
 
 public final class RayUtil {
@@ -101,13 +104,15 @@ public final class RayUtil {
                 MEConsumerComponent consumerComponent = holder.getComponent(MEConsumerComponent.getComponentType());
 
                 if(consumerComponent != null){
-                    RayDirection rayDirection = getRayDirection(direction);
+                    RayDirection rayDirection = getRayDirectionEnum(direction);
 
                     Ray newRay = emittedRay.clone();
 
                     newRay.setResistance(returnedResistance);
 
-                    EmitterStorage.putRay(x,y, z, newRay, rayDirection);
+                    UUID sourceUUID = ray != null ? ray.getRay() : uuid;
+
+                    EmitterStorage.putRay(x,y, z, newRay, rayDirection, sourceUUID, world);
                 }
 
                 METraversableComponent traversableComponent = holder.getComponent(METraversableComponent.getComponentType());
@@ -135,44 +140,12 @@ public final class RayUtil {
             }else{
                 RayStorage.put(x, y, z, new RayMapData(uuid, resistanceLeft));
             }
-
-            String particuleName;
-
-            if(emittedRay.getRayType() != null){
-                switch(emittedRay.getRayType()){
-                    case RayType.Earth -> {
-                        particuleName = "Mana_Earth_Small_Explosion";
-                    }
-                    case RayType.Fire -> {
-                        particuleName = "Mana_Fire_Small_Explosion";
-                    }
-                    case RayType.Lightning -> {
-                        particuleName = "Mana_Lightning_Small_Explosion";
-                    }
-                    case RayType.Void -> {
-                        particuleName = "Mana_Void_Small_Explosion";
-                    }
-                    case RayType.Water -> {
-                        particuleName = "Mana_Water_Small_Explosion";
-                    }
-                    case RayType.Wind -> {
-                        particuleName = "Mana_Wind_Small_Explosion";
-                    }
-                    default -> {
-                        particuleName = "Mana_Small_Explosion";
-                    }
-                }
-            }else{
-                particuleName = "Mana_Small_Explosion";
-            }
-
-            ParticleUtil.spawnParticleEffect(particuleName, new Vector3d(vector3i.x + 0.5, vector3i.y, vector3i.z + 0.5), store);
         }
 
         return returnedResistance;
     }
 
-    private static RayDirection getRayDirection(int direction) {
+    public static RayDirection getRayDirectionEnum(int direction) {
         RayDirection rayDirection;
 
         switch(direction){
@@ -187,31 +160,84 @@ public final class RayUtil {
         return rayDirection;
     }
 
-    public static void destroyRay(int x, int y, int z, MEEmitterComponent component, int rotation){
-        for(int i = 0; i < component.getEmittedRay().getResistance(); i++){
-            switch(rotation){
-                case 0:
-                    RayMapData ray = RayStorage.get(x - 1 - i, y, z);
-                    destroyPartRay(x - 1 - i, y, z, component.getBlockId(), ray);
-                    break;
-                case 1:
-                    RayMapData ray2 = RayStorage.get(x, y, z + 1 + i);
-                    destroyPartRay(x, y, z + 1 + i, component.getBlockId(), ray2);
-                    break;
-                case 2:
-                    RayMapData ray3 = RayStorage.get(x + 1 + i, y, z);
-                    destroyPartRay(x + 1 + i, y, z, component.getBlockId(), ray3);
-                    break;
-                case 3:
-                    RayMapData ray4 = RayStorage.get(x, y, z - 1 - i);
-                    destroyPartRay(x, y, z - 1 - i, component.getBlockId(), ray4);
-                    break;
+    public static int getRayDirectionFromBlockRotation(int i, int rotationXZ) {
+
+        int returnValue = i;
+
+        if(returnValue == 12 || returnValue == 4){
+            return returnValue;
+        }
+
+        if(rotationXZ == 1){
+            switch (i) {
+                case 1 -> returnValue = 2;
+                case 2 -> returnValue = 3;
+                case 3 -> returnValue = 0;
+                case 0 -> returnValue = 1;
             }
+        }else if(rotationXZ == 2){
+            switch (i) {
+                case 1 -> returnValue = 3;
+                case 2 -> returnValue = 0;
+                case 3 -> returnValue = 1;
+                case 0 -> returnValue = 2;
+            }
+        }else if(rotationXZ == 3){
+            switch (i) {
+                case 1 -> returnValue = 0;
+                case 2 -> returnValue = 1;
+                case 3 -> returnValue = 2;
+                case 0 -> returnValue = 3;
+            }
+        }
+        return returnValue;
+    }
+
+    public static void destroyRay(int x, int y, int z, int numberOfBlock, int rotation, World world, Set<Long> visited){
+        for(int i = 0; i < numberOfBlock; i++){
+            int bx = x, by = y, bz = z;
+            switch(rotation){
+                case 0 -> { bz = z - 1 - i; }
+                case 1 -> { bx = x - 1 - i; }
+                case 2 -> { bz = z + 1 + i; }
+                case 3 -> { bx = x + 1 + i; }
+                case 4 -> { by = y + 1 + i; }
+                case 12 -> { by = y - 1 - i; }
+            }
+
+            var holder = world.getBlockComponentHolder(bx, by, bz);
+            if(holder != null){
+                var consumer = holder.getComponent(MEConsumerComponent.getComponentType());
+                if(consumer != null){
+                    long key = ChunkUtil.indexBlockInColumn(bx, by, bz);
+                    if (!visited.add(key)) continue;
+
+                    InfusePlugin.get().getLOGGER().atInfo().log("ISACTIVATED? : (" + consumer.isActivated() + ")");
+                    if(consumer.isActivated()){
+                        int rotationXZ = world.getBlockRotationIndex(bx, by, bz) % 4;
+                        EmitterStorage.removeRay(bx, by, bz, getRayDirectionEnum(rotation), world);
+                        for(RayIO rayIO : consumer.getRayIOs()){
+                            for(MEConsumerOutputRay output : rayIO.getOutputs()){
+                                int direction = getRayDirectionFromBlockRotation(output.getDirection().getValue(), rotationXZ);
+                                consumer.setActivated(false);
+                                destroyRay(bx, by, bz, rayIO.getLastFinalResistance(), direction, world, visited);
+                            }
+                        }
+                    }
+                }
+            }
+
+            InfusePlugin.get().getLOGGER().atInfo().log("DELETED RAY AT : (" + bx + ", " + by + ", " + bz + ")");
+
+            RayMapData ray = RayStorage.get(bx, by, bz);
+            destroyPartRay(bx, by, bz, ray);
+            EmitterStorage.remove(bx, by, bz, world);
         }
     }
 
-    public static void destroyPartRay(int x, int y, int z, UUID uuid, RayMapData ray){
+    public static void destroyPartRay(int x, int y, int z, RayMapData ray){
         if(ray != null){
+            InfusePlugin.get().getLOGGER().atInfo().log("DELETED RAYPART AT : (" + x + ", " + y + ", " + z + ")");
             RayStorage.remove(x, y, z);
         }
     }

@@ -4,7 +4,7 @@ import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
 import com.hypixel.hytale.math.util.ChunkUtil;
-import com.hypixel.hytale.math.vector.Vector3i;
+import org.joml.Vector3i;
 import com.hypixel.hytale.server.core.modules.block.BlockModule;
 import com.hypixel.hytale.server.core.universe.world.chunk.WorldChunk;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
@@ -32,6 +32,10 @@ public class EmiteSystem extends EntityTickingSystem<ChunkStore> {
 
 
             if(component != null){
+
+                if(!component.isDirty()){
+                    return;
+                }
 
                 var world = store.getExternalData().getWorld();
 
