@@ -68,7 +68,7 @@ public class EmitterCollideInteraction extends SimpleBlockInteraction {
                                         currentUUID = mapData.uuid;
                                     }
 
-                                    boolean achieved = RayUtil.castRay(component.getEmittedRay(), world.getBlockRotationIndex(vector3i.x, vector3i.y, vector3i.z), vector3i, store, world, false, currentUUID);
+                                    boolean achieved = RayUtil.castRay(component.getEmittedRay(), world.getBlockRotationIndex(vector3i.x, vector3i.y, vector3i.z), vector3i, store, world, currentUUID);
                                 }
                             }
                         }

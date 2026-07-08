@@ -15,49 +15,55 @@ import org.infuse.plugin.Class.Emitter.EmitterStorage;
 import org.infuse.plugin.Class.Ray.*;
 import org.infuse.plugin.components.*;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 public final class RayUtil {
 
-    public static boolean castRay(Ray emittedRay, int rotation, Vector3i vector3i, Store<EntityStore> store, World world, boolean isDeleteMode, UUID uuid){
+    public static boolean castRay(Ray emittedRay, int rotation, Vector3i vector3i, Store<EntityStore> store, World world, UUID uuid){
         int resistanceLeft = emittedRay.getResistance();
         int blockLeft = emittedRay.getResistance();
         int i = -1;
-        boolean deleteMode = isDeleteMode;
 
         while(blockLeft > 0){
             i++;
+            int lastX = vector3i.x;
+            int lastY = vector3i.y;
+            int lastZ = vector3i.z;
+            int subValue = 1 + i;
             switch(rotation){
                 case 0:
-                    resistanceLeft = shootPartRay(world, new Vector3i(vector3i.x, vector3i.y, vector3i.z - 1 - i), resistanceLeft, store, deleteMode, uuid, rotation, emittedRay);
+                    lastZ -= subValue;
                     break;
                 case 1:
-                    resistanceLeft = shootPartRay(world, new Vector3i(vector3i.x - 1 - i, vector3i.y, vector3i.z), resistanceLeft, store, deleteMode, uuid, rotation, emittedRay);
+                    lastX -= subValue;
                     break;
                 case 2:
-                    resistanceLeft = shootPartRay(world, new Vector3i(vector3i.x, vector3i.y, vector3i.z + 1 + i), resistanceLeft, store, deleteMode, uuid, rotation, emittedRay);
+                    lastZ += subValue;
                     break;
                 case 3:
-                    resistanceLeft = shootPartRay(world, new Vector3i(vector3i.x + 1 + i, vector3i.y, vector3i.z), resistanceLeft, store, deleteMode, uuid, rotation, emittedRay);
+                    lastX += subValue;
                     break;
                 case 4:
-                    resistanceLeft = shootPartRay(world, new Vector3i(vector3i.x, vector3i.y + 1 + i, vector3i.z), resistanceLeft, store, deleteMode, uuid, rotation, emittedRay);
+                    lastY += subValue;
                     break;
                 case 12:
-                    resistanceLeft = shootPartRay(world, new Vector3i(vector3i.x, vector3i.y - 1 - i, vector3i.z), resistanceLeft, store, deleteMode, uuid, rotation, emittedRay);
+                    lastY -= subValue;
                     break;
             }
-            if(resistanceLeft <= 0){
-                deleteMode = true;
-            }
+            resistanceLeft = shootPartRay(world, new Vector3i(lastX, lastY, lastZ), resistanceLeft, store, uuid, rotation, emittedRay);
             blockLeft--;
+            if(resistanceLeft <= 0){
+                destroyRay(lastX, lastY, lastZ, blockLeft, rotation, world, new HashSet<>());
+                blockLeft = 0;
+            }
         }
 
         return true;
     }
 
-    public static int shootPartRay(World world, Vector3i vector3i, int resistanceLeft, Store<EntityStore> store, boolean deleteMode, UUID uuid, int direction, Ray emittedRay){
+    public static int shootPartRay(World world, Vector3i vector3i, int resistanceLeft, Store<EntityStore> store, UUID uuid, int direction, Ray emittedRay){
         BlockType blockType = world.getBlockType(vector3i.x, vector3i.y, vector3i.z);
         int returnedResistance = resistanceLeft;
         Holder<ChunkStore> holder = world.getBlockComponentHolder(vector3i.x, vector3i.y, vector3i.z);
@@ -66,80 +72,70 @@ public final class RayUtil {
         int z = vector3i.z;
         RayMapData ray = RayStorage.get(x, y, z);
 
-        if(deleteMode){
-            if(ray != null){
-                if(ray.canUnPropagateAs(uuid)){
-                    RayStorage.remove(x, y, z);
-                }else{
-                    ray.deleteCollisionAs(uuid);
-                }
-            }
-            return 0;
-        }else{
-            if(ray != null){
-                if(!ray.canPropagate(uuid)){
-                    ray.collideWith(uuid, resistanceLeft, emittedRay.getPower(), emittedRay.getRayType());
-                    if(ray.needToUpdateCollision(uuid)){
-                        ray.update(uuid, resistanceLeft);
-                    }
-                    return 0;
-                }else{
-                    if(ray.getOtherRay() != null){
-                        returnedResistance -= (ray.getOtherResistance() - 1);
-                    }
-                }
-            }
-            if(blockType != null) {
-                if (blockType.getId().equals("Empty")) {
-                    returnedResistance--;
-                }
-            }
-            if(holder != null){
-                METransformableComponent transformableComponent = holder.getComponent(METransformableComponent.getComponentType());
 
-                if(transformableComponent != null){
-                    world.setBlock(vector3i.x, vector3i.y, vector3i.z, transformableComponent.getBlockId());
-                }
-
-                MEConsumerComponent consumerComponent = holder.getComponent(MEConsumerComponent.getComponentType());
-
-                if(consumerComponent != null){
-                    RayDirection rayDirection = getRayDirectionEnum(direction);
-
-                    Ray newRay = emittedRay.clone();
-
-                    newRay.setResistance(returnedResistance);
-
-                    UUID sourceUUID = ray != null ? ray.getRay() : uuid;
-
-                    EmitterStorage.putRay(x,y, z, newRay, rayDirection, sourceUUID, world);
-                }
-
-                METraversableComponent traversableComponent = holder.getComponent(METraversableComponent.getComponentType());
-
-                if(traversableComponent != null){
-                    returnedResistance -= traversableComponent.getStoppingPower();
-                }else{
-                    return 0;
-                }
-            }else{
-                if(blockType != null) {
-                    if (!blockType.getId().equals("Empty")) {
-                        return 0;
-                    }
-                }else{
-                    return 0;
-                }
-            }
-            if(ray != null){
-                if(!ray.isPresent(uuid)){
-                    ray.propagateAs(uuid, resistanceLeft, emittedRay.getPower(), emittedRay.getRayType());
-                }else{
+        if(ray != null){
+            if(!ray.canPropagate(uuid)){
+                ray.collideWith(uuid, resistanceLeft, emittedRay.getPower(), emittedRay.getRayType());
+                if(ray.needToUpdateCollision(uuid)){
                     ray.update(uuid, resistanceLeft);
                 }
+                return 0;
             }else{
-                RayStorage.put(x, y, z, new RayMapData(uuid, resistanceLeft));
+                if(ray.getOtherRay() != null){
+                    returnedResistance -= (ray.getOtherResistance() - 1);
+                }
             }
+        }
+        if(blockType != null) {
+            if (blockType.getId().equals("Empty")) {
+                returnedResistance--;
+            }
+        }
+        if(holder != null){
+            METransformableComponent transformableComponent = holder.getComponent(METransformableComponent.getComponentType());
+
+            if(transformableComponent != null){
+                world.setBlock(vector3i.x, vector3i.y, vector3i.z, transformableComponent.getBlockId());
+            }
+
+            MEConsumerComponent consumerComponent = holder.getComponent(MEConsumerComponent.getComponentType());
+
+            if(consumerComponent != null){
+                RayDirection rayDirection = getRayDirectionEnum(direction);
+
+                Ray newRay = emittedRay.clone();
+
+                newRay.setResistance(returnedResistance);
+
+                UUID sourceUUID = ray != null ? ray.getRay() : uuid;
+
+                EmitterStorage.putRay(x,y, z, newRay, rayDirection, sourceUUID, world);
+            }
+
+            METraversableComponent traversableComponent = holder.getComponent(METraversableComponent.getComponentType());
+
+            if(traversableComponent != null){
+                returnedResistance -= traversableComponent.getStoppingPower();
+            }else{
+                return 0;
+            }
+        }else{
+            if(blockType != null) {
+                if (!blockType.getId().equals("Empty")) {
+                    return 0;
+                }
+            }else{
+                return 0;
+            }
+        }
+        if(ray != null){
+            if(!ray.isPresent(uuid)){
+                ray.propagateAs(uuid, resistanceLeft, emittedRay.getPower(), emittedRay.getRayType());
+            }else{
+                ray.update(uuid, resistanceLeft);
+            }
+        }else{
+            RayStorage.put(x, y, z, new RayMapData(uuid, resistanceLeft));
         }
 
         return returnedResistance;

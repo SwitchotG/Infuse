@@ -134,7 +134,7 @@ public class MEConsumerSystem extends EntityTickingSystem<ChunkStore> {
                                             component.setActivated(true);
                                             cmd.run(s ->
                                                     {
-                                                        RayUtil.castRay(ray, direction, new Vector3i(x, y, z), entityStore.getStore(), s.getExternalData().getWorld(), false, component.getBlockId());
+                                                        RayUtil.castRay(ray, direction, new Vector3i(x, y, z), entityStore.getStore(), s.getExternalData().getWorld(), component.getBlockId());
                                                     }
                                             );
                                         }

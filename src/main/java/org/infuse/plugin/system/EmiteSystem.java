@@ -67,7 +67,7 @@ public class EmiteSystem extends EntityTickingSystem<ChunkStore> {
                         if(component.isCreative()){
                             if(store.isInThread() && !store.isShutdown()){
                                 world.execute( () ->
-                                        RayUtil.castRay(component.getEmittedRay(),world.getBlockRotationIndex(x, y, z),new Vector3i(x, y, z),entityStore.getStore(), world, false, component.getBlockId())
+                                        RayUtil.castRay(component.getEmittedRay(),world.getBlockRotationIndex(x, y, z),new Vector3i(x, y, z),entityStore.getStore(), world, component.getBlockId())
                                 );
                             }
                         }
